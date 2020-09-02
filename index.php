@@ -20,11 +20,6 @@ class Galaxy {
         }
     }
 
-    public function showHeader() {
-        echo "<h1 class='title'>The Restaurant at the End of the Universe</h1>";
-        echo "<div class='content row'>";
-    }
-
     public function showFooter() {
         echo "</div>";
     }
@@ -106,29 +101,33 @@ class Galaxy {
             if(mysqli_num_rows($result) > 0){
                 echo "<div class='col-3'>";
                     echo "<h2>Orders</h2>";
-                    echo "<table id='table_orders'>";
-                    echo "<tr>";
-                    echo "<th>ID</th>";
-                    echo "<th>Staff</th>";
-                    echo "<th>Table</th>";
-                    echo "<th>Tablet</th>";
-                    echo "<th>Food</th>";
-                    echo "<th>Food type</th>";
-                    echo "<th>Price</th>";
-                    echo "<th></th>";
-                    echo "</tr>";
-                    while($row = mysqli_fetch_array($result)){
-                        echo "<tr>";
-                        echo "<td>" . $row['id'] . "</td>";
-                        echo "<td>" . $row['staffname'] . "</td>";
-                        echo "<td>" . $row['tablename'] . "</td>";
-                        echo "<td>" . $row['tablet'] . "</td>";
-                        echo "<td>" . $row['foodname'] . "</td>";
-                        echo "<td>" . $row['foodtype'] . "</td>";
-                        echo "<td>" . $row['price'] . "€</td>";
-                        echo "<td><input type='button' name='confirm' value='Confirm' class='confirm_order' id='" . $row['id'] . "' /></td>";
-                        echo "</tr>";
-                    }
+                    echo "<table id='table_orders' class='table'>";
+                        echo "<thead>";
+                            echo "<tr>";
+                            echo "<th>ID</th>";
+                            echo "<th>Staff</th>";
+                            echo "<th>Table</th>";
+                            echo "<th>Tablet</th>";
+                            echo "<th>Food</th>";
+                            echo "<th>Food type</th>";
+                            echo "<th>Price</th>";
+                            echo "<th></th>";
+                            echo "</tr>";
+                        echo "</thead>";
+                        echo "<tbody>";
+                            while($row = mysqli_fetch_array($result)){
+                                echo "<tr>";
+                                echo "<td>" . $row['id'] . "</td>";
+                                echo "<td>" . $row['staffname'] . "</td>";
+                                echo "<td>" . $row['tablename'] . "</td>";
+                                echo "<td>" . $row['tablet'] . "</td>";
+                                echo "<td>" . $row['foodname'] . "</td>";
+                                echo "<td>" . $row['foodtype'] . "</td>";
+                                echo "<td>" . $row['price'] . "€</td>";
+                                echo "<td><input type='button' name='confirm' value='Confirm' class='confirm_order' id='" . $row['id'] . "' /></td>";
+                                echo "</tr>";
+                            }
+                        echo "</tbody>";
                     echo "</table>";
                 echo "</div>";
                 // Free result set
@@ -148,13 +147,13 @@ class Galaxy {
             //echo '<form action="/submit_order.php">';
             echo '<div>';
 
-            echo '<label for="table">Staff:</label><br>';
             $sql = "SELECT * FROM staffs";
             if($result = mysqli_query($this->link, $sql)){
                 if(mysqli_num_rows($result) > 0){
+                    echo '<label for="table">Staff:</label><br>';
                     while($row = mysqli_fetch_array($result)){
-                        echo '<input type="radio" id="' . $row['id'] . '" name="staff[]" value="' . $row['name'] . '">';
-                        echo '<label for="' . $row['id'] . '"> ' . $row['name'] . '</label><br>';
+                        echo '<input type="radio" id="staff_' . $row['id'] . '" name="staff[]" value="' . $row['name'] . '">';
+                        echo '<label for="staff_' . $row['id'] . '"> ' . $row['name'] . '</label><br>';
                     }
                     // Free result set
                     mysqli_free_result($result);
@@ -165,13 +164,13 @@ class Galaxy {
                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($this->link);
             }
 
-            echo '<br><label for="table">Table:</label><br>';
             $sql = "SELECT * FROM tables";
             if($result = mysqli_query($this->link, $sql)){
                 if(mysqli_num_rows($result) > 0){
+                    echo '<br><label for="table">Table:</label><br>';
                     while($row = mysqli_fetch_array($result)){
-                        echo '<input type="radio" id="' . $row['id'] . '" name="table[]" value="' . $row['name'] . '">';
-                        echo '<label for="' . $row['id'] . '"> ' . $row['name'] . '</label><br>';
+                        echo '<input type="radio" id="table_' . $row['id'] . '" name="table[]" value="' . $row['name'] . '">';
+                        echo '<label for="table_' . $row['id'] . '"> ' . $row['name'] . '</label><br>';
                     }
                     // Free result set
                     mysqli_free_result($result);
@@ -182,13 +181,13 @@ class Galaxy {
                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($this->link);
             }
 
-            echo '<br><label for="tablet">Tablet:</label><br>';
             $sql = "SELECT * FROM tablets";
             if($result = mysqli_query($this->link, $sql)){
                 if(mysqli_num_rows($result) > 0){
+                    echo '<br><label for="tablet">Tablet:</label><br>';
                     while($row = mysqli_fetch_array($result)){
-                        echo '<input type="radio" id="' . $row['id'] . '" name="tablet[]" value="' . $row['name'] . '">';
-                        echo '<label for="' . $row['id'] . '"> ' . $row['name'] . '</label><br>';
+                        echo '<input type="radio" id="tablet_' . $row['id'] . '" name="tablet[]" value="' . $row['name'] . '">';
+                        echo '<label for="tablet_' . $row['id'] . '"> ' . $row['name'] . '</label><br>';
                     }
                     // Free result set
                     mysqli_free_result($result);
@@ -199,13 +198,13 @@ class Galaxy {
                 echo "ERROR: Could not able to execute $sql. " . mysqli_error($this->link);
             }
 
-            echo '<br><label for="tablet">Food & Drink:</label><br>';
             $sql = "SELECT * FROM foods";
             if($result = mysqli_query($this->link, $sql)){
                 if(mysqli_num_rows($result) > 0){
+                    echo '<br><label>Food & Drink:</label><br>';
                     while($row = mysqli_fetch_array($result)){
-                        echo '<input type="radio" id="' . $row['id'] . '" name="foodanddrink[]" value="' . $row['name'] . '">';
-                        echo '<label for="' . $row['id'] . '"> ' . $row['name'] . ' (' . $row['type'] . ') - ' . $row['price'] . '€</label><br>';
+                        echo '<input type="radio" id="fad_' . $row['id'] . '" name="foodanddrink[]" value="' . $row['name'] . '">';
+                        echo '<label for="fad_' . $row['id'] . '"> ' . $row['name'] . ' (' . $row['type'] . ') - ' . $row['price'] . '€</label><br>';
                     }
                     // Free result set
                     mysqli_free_result($result);
@@ -227,7 +226,7 @@ class Galaxy {
 }
 
 $g = new Galaxy();
-$g->showHeader();
+//$g->showHeader();
 
 $g->showClients();
 //$g->formInsertStaff();

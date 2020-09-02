@@ -5,89 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>The Restaurant at the End of the Universe</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $("#submitOrder").click(function(){
-
-                var staff_id = 0;
-                var table_id = 0;
-                var tablet_id = 0;
-                var foodanddrink_id = 0;
-
-                // Staffs
-                var staff = document.getElementsByName('staff[]');
-                for (var i = 0, length = staff.length; i < length; i++) {
-                    if (staff[i].checked) {
-                        staff_id = staff[i].id;
-                        break;
-                    }
-                }
-
-                // Tables
-                var table = document.getElementsByName('table[]');
-                for (var i = 0, length = table.length; i < length; i++) {
-                    if (table[i].checked) {
-                        table_id = table[i].id;
-                        break;
-                    }
-                }
-
-                // Tablets
-                var tablet = document.getElementsByName('tablet[]');
-                for (var i = 0, length = tablet.length; i < length; i++) {
-                    if (tablet[i].checked) {
-                        tablet_id = tablet[i].id;
-                        break;
-                    }
-                }
-
-                // Food & Drink
-                var foodanddrink = document.getElementsByName('foodanddrink[]');
-                for (var i = 0, length = foodanddrink.length; i < length; i++) {
-                    if (foodanddrink[i].checked) {
-                        foodanddrink_id = foodanddrink[i].id;
-                        break;
-                    }
-                }
-
-                console.log(staff_id + ', ' + table_id + ', ' + tablet_id + ', ' + foodanddrink_id);
-
-                var sendData = {
-                    staff_id : staff_id,
-                    table_id : table_id,
-                    tablet_id : tablet_id,
-                    foodanddrink_id : foodanddrink_id,
-                }
-
-                console.log(sendData);
-
-                $.post( "ajax/submit_order.php", { sendData: sendData }, function( data ) {
-                    //console.log('Order submited ');
-                    $.post( "ajax/refresh_order.php", {}, function( data ) {
-                        console.log('Order Refreshed!')
-                        $('#table_orders').html(data);
-                    });
-                });
-            });
-
-            $( "body" ).on( "click", ".confirm_order", function() {
-                var sendData = {id: this.id}
-
-                if (window.confirm("Are you sure?")) {
-                    $.post( "ajax/confirm_order.php", { sendData: sendData }, function( data ) {
-                        //console.log('Order confirmed ');
-                        $.post( "ajax/refresh_order.php", {}, function( data ) {
-                            console.log('Order refreshed!')
-                            $('#table_orders').html(data);
-                        });
-                    });
-                }
-            });
-        });
-    </script>
+    <script src="js/scripts.js"></script>
 </head>
 <body>
+    <h1 class="title">The Restaurant at the End of the Universe</h1>
+    <div class="content row">
 </body>
 </html>

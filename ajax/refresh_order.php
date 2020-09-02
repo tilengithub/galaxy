@@ -24,17 +24,19 @@ $output = '';
 
 if($result = mysqli_query($link, $sql)) {
     if (mysqli_num_rows($result) > 0) {
-        $output .= "<tr>";
-        $output .= "<th>ID</th>";
-        $output .= "<th>Staff</th>";
-        $output .= "<th>Table</th>";
-        $output .= "<th>Tablet</th>";
-        $output .= "<th>Food</th>";
-        $output .= "<th>Food type</th>";
-        $output .= "<th>Price</th>";
-        $output .= "<th></th>";
-        $output .= "</tr>";
-
+        $output .= "<thead>";
+            $output .= "<tr>";
+                $output .= "<th>ID</th>";
+                $output .= "<th>Staff</th>";
+                $output .= "<th>Table</th>";
+                $output .= "<th>Tablet</th>";
+                $output .= "<th>Food</th>";
+                $output .= "<th>Food type</th>";
+                $output .= "<th>Price</th>";
+                $output .= "<th></th>";
+            $output .= "</tr>";
+        $output .= "</thead>";
+        $output .= "<tbody>";
         while ($row = mysqli_fetch_array($result)) {
             $output .= "<tr>";
             $output .= "<td>" . $row['id'] . "</td>";
@@ -47,6 +49,8 @@ if($result = mysqli_query($link, $sql)) {
             $output .= "<td><input type='button' name='confirm' value='Confirm' class='confirm_order' id='" . $row['id'] . "' /></td>";
             $output .= "</tr>";
         }
+        $output .= "</tbody>";
+
         // Free result set
         mysqli_free_result($result);
     } else {

@@ -1,0 +1,10 @@
+body {
+    margin: auto;
+    max-width: 1140px;
+    width: 100%;
+}
+
+.title {
+    margin-bottom: 50px;
+    text-align: center;
+}
